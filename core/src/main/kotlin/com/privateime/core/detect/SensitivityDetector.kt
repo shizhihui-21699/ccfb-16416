@@ -8,6 +8,7 @@ import com.privateime.core.model.FieldSource
 import com.privateime.core.model.ImeFlags
 import com.privateime.core.model.InputTypeNames
 import com.privateime.core.model.Verdict
+import com.privateime.core.model.withoutText
 import com.privateime.core.text.TextNormalizer
 import java.util.Locale
 
@@ -253,10 +254,10 @@ class SensitivityDetector(
             sticky = sticky,
         )
 
-        // Diagnostics hook: no user data, only shapes and weights.
-        if (config.traceSink != null && config.traceSink(signals, verdict)) {
-            // sink consumed the trace
-        }
+        // Optional diagnostics hook. It never receives user text (only the signals
+        // snapshot, whose `textSample` this call deliberately strips) and its return
+        // value is ignored.
+        config.traceSink?.invoke(signals.withoutText(), verdict)
         return verdict
     }
 

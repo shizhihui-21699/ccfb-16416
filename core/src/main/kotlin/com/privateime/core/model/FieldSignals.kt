@@ -76,12 +76,14 @@ data class FieldSignals(
         append(" /inputType=").append(inputType?.let(InputTypeNames::describe) ?: "-")
         append(" /maxLen=").append(maxTextLength)
     }
-
-    companion object {
-        /** @return a copy with `textSample` removed. */
-        fun FieldSignals.withoutText(): FieldSignals = copy(textSample = null)
-    }
 }
+
+/**
+ * @return a copy with `textSample` removed. Top-level (not inside the companion)
+ * so it resolves at any call site; used before handing signals to anything that
+ * might retain them.
+ */
+fun FieldSignals.withoutText(): FieldSignals = copy(textSample = null)
 
 /** Constants mirrored from `android.text.InputType` so `core` has no Android dependency. */
 object InputTypeNames {
