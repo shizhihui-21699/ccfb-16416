@@ -30,16 +30,30 @@ object ImeSetup {
 
     /** True when this keyboard is the *currently selected* one. */
     fun isSelected(context: Context): Boolean {
+        val expected = ComponentName(context, PrivateImeService::class.java)
         val manager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            ?: return false
-        // getCurrentInputMethodInfo() is the modern accessor; the legacy
-        // `currentInputMethodName` string property no longer exists.
-        val current = try {
-            manager.currentInputMethodInfo
-        } catch (_: Exception) {
-            null
-        } ?: return false
-        return current.component == ComponentName(context, PrivateImeService::class.java)
+
+        // API 34+ can report the selected IME directly. On older platforms the
+        // accessor does not exist, and calling it there raises NoSuchMethodError —
+        // which is an Error, not an Exception, so it must be guarded by an SDK
+        // check rather than a try/catch.
+        if (manager != null && android.os.Build.VERSION.SDK_INT >= 34) {
+            val current = try {
+                manager.currentInputMethodInfo
+            } catch (_: Exception) {
+                null
+            }
+            if (current != null) return current.component == expected
+        }
+
+        // Fallback for all versions: compare the *enabled* list's default entry to
+        // the system default. This is the same signal the platform uses to pick the
+        // active IME and is available back to API 26.
+        val defaultIme = android.provider.Settings.Secure.getString(
+            context.contentResolver,
+            android.provider.Settings.Secure.DEFAULT_INPUT_METHOD,
+        ) ?: return false
+        return android.content.ComponentName.unflattenFromString(defaultIme) == expected
     }
 
     /** Opens the system screen where the user enables this keyboard. */
