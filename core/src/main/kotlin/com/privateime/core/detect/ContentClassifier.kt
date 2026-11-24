@@ -138,6 +138,24 @@ object ContentClassifier {
                 ),
             )
         }
+
+        // ---- password-shaped token -----------------------------------------
+        // A single long token mixing case, digits and symbols is very unlikely to
+        // be a word the user is composing. This is only ever WEAK evidence (the
+        // detector caps content-only password evidence at WEAK → guarded), because
+        // a strong passphrase or a product code looks the same, but it is the only
+        // signal available when a password box declares plain text and has no label.
+        if (looksLikeCredential(sample) && !numericField) {
+            out.add(
+                Evidence(
+                    code = "content.credential.shape",
+                    source = FieldSource.CONTENT,
+                    weight = 0.55,
+                    category = Category.PASSWORD,
+                    detail = "credential-shaped token len=${sample.length}",
+                ),
+            )
+        }
         return out
     }
 
@@ -186,7 +204,11 @@ object ContentClassifier {
                 ),
             )
         }
-        if (looksLikeCredential(trimmed)) {
+        // Residue scanning is a *review* step, not an automatic deletion, so it is
+        // deliberately more inclusive than the live guard: a digitless passphrase
+        // ("CorrectHorseBattery") has no digit and would be missed by the live rule.
+        // The cost is that an occasional punctuated phrase shows up for review.
+        if (looksLikeCredential(trimmed, requireDigit = false)) {
             out.add(
                 Evidence(
                     "residue.credential.shape", FieldSource.CONTENT, 0.5, Category.PASSWORD,
@@ -200,20 +222,28 @@ object ContentClassifier {
     /**
      * A token that is very unlikely to be a natural-language word: mixes
      * upper/lower/digit/symbol, has no spaces, and is long enough that chance
-     * does not explain it. Natural words ("Hello") and camel-case brand names
-     * are excluded by requiring at least three of the four classes.
+     * does not explain it.
+     *
+     * @param requireDigit when true (the default) the token must contain a digit.
+     *   Ordinary prose with punctuation ("Hello,World!") has three classes but no
+     *   digit, and flagging it would cut cloud suggestions mid-sentence — the exact
+     *   experience regression this feature is trying to avoid. Real credentials
+     *   almost always contain a digit, so requiring one removes most false
+     *   positives at negligible cost to recall.
      */
-    fun looksLikeCredential(text: String): Boolean {
+    fun looksLikeCredential(text: String, requireDigit: Boolean = true): Boolean {
         val t = text.trim()
         if (t.length < 8 || t.length > 128) return false
         if (t.any { it.isWhitespace() }) return false
         var classes = 0
         if (t.any(Char::isUpperCase)) classes++
         if (t.any(Char::isLowerCase)) classes++
-        if (t.any(Char::isDigit)) classes++
+        val hasDigit = t.any(Char::isDigit)
+        if (hasDigit) classes++
         if (t.any { !it.isLetterOrDigit() }) classes++
         // A pure digit run is handled by the card/OTP rules; don't double count.
         if (t.all(Char::isDigit)) return false
+        if (requireDigit && !hasDigit) return false
         return classes >= 3 && t.length >= 9
     }
 

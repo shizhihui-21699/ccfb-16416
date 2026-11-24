@@ -88,7 +88,7 @@ class PrivateImeService : InputMethodService() {
         super.onCreate()
         settings = settingsStore.load()
         rebuildEngine()
-        registerClipboardWatcher()
+        syncClipboardWatcher()
         configureCloudTransport()
         // History predates the fix; scrub it before anything can offer it.
         mainHandler.post {
@@ -101,17 +101,35 @@ class PrivateImeService : InputMethodService() {
         }
     }
 
-    private fun registerClipboardWatcher() {
-        if (clipboardWatcher != null) return
+    /**
+     * Registers or unregisters the clipboard listener to match the current setting.
+     *
+     * Subscribing only while clipboard sync is enabled matters: a user who turns the
+     * feature off should not have the keyboard observing every copy on the device,
+     * even though [onClipboardChanged] would ignore them.
+     */
+    private fun syncClipboardWatcher() {
         val manager = getSystemService(CLIPBOARD_SERVICE) as? android.content.ClipboardManager ?: return
-        val listener = android.content.ClipboardManager.OnPrimaryClipChangedListener {
-            onClipboardChanged()
-        }
-        try {
-            manager.addPrimaryClipChangedListener(listener)
-            clipboardWatcher = listener
-        } catch (_: Exception) {
-            // Some ROMs restrict listener registration; capture is optional.
+        val wantListener = settings.clipboardSyncEnabled && clipboardHistory.available
+        if (wantListener && clipboardWatcher == null) {
+            val listener = android.content.ClipboardManager.OnPrimaryClipChangedListener {
+                onClipboardChanged()
+            }
+            try {
+                manager.addPrimaryClipChangedListener(listener)
+                clipboardWatcher = listener
+            } catch (_: Exception) {
+                // Some ROMs restrict listener registration; capture is optional.
+            }
+        } else if (!wantListener) {
+            clipboardWatcher?.let { listener ->
+                try {
+                    manager.removePrimaryClipChangedListener(listener)
+                } catch (_: Exception) {
+                    // Ignore; re-registration is idempotent.
+                }
+            }
+            clipboardWatcher = null
         }
     }
 
@@ -165,10 +183,28 @@ class PrivateImeService : InputMethodService() {
         gate = LearningGate(learningStore, System::currentTimeMillis)
     }
 
-    /** Called by the settings screen after a change, via a broadcast or a re-entry. */
+    /**
+     * The settings screen runs in a different process from the IME (an IME service
+     * is bound by the system, not by our activity), so there is no in-process way
+     * to push a change. Instead the IME re-reads the settings on every focus
+     * change: the read is a handful of preference lookups and already on the
+     * critical path, and a privacy switch that does not take effect is a bug
+     * users cannot work around.
+     */
+    private fun reloadSettingsIfChanged() {
+        val fresh = settingsStore.load()
+        if (fresh == settings) return
+        settings = fresh
+        rebuildEngine()
+        // A master switch may have just opened or closed the clipboard listener.
+        syncClipboardWatcher()
+    }
+
+    /** Explicit entry point for callers that can reach the service (tests, bound clients). */
     fun onSettingsChanged() {
         settings = settingsStore.load()
         rebuildEngine()
+        syncClipboardWatcher()
     }
 
     // ------------------------------------------------------------- lifecycle
@@ -185,6 +221,9 @@ class PrivateImeService : InputMethodService() {
     }
 
     private fun startField(attribute: EditorInfo) {
+        // Settings may have changed since the last focus; apply them before the
+        // first decision so a toggle takes effect on the very next field.
+        reloadSettingsIfChanged()
         pendingWord.setLength(0)
         val connection = currentInputConnection
         val sample = if (shouldReadSample(attribute)) {
