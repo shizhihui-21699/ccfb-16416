@@ -216,7 +216,13 @@ class PrivateImeService : InputMethodService() {
         } catch (e: Exception) {
             // A detection failure must never prevent the keyboard from showing.
             currentState = null
-            android.util.Log.w(TAG, "onStartInput failed; failing open", e)
+            // Log the type only, never the message or the throwable: an exception
+            // raised while reading field content can carry that content in its
+            // message, and a crash report is not a safe place for a password.
+            android.util.Log.w(
+                TAG,
+                "onStartInput failed; failing open (" + e.javaClass.simpleName + ")",
+            )
         }
     }
 

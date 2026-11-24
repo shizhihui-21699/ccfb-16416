@@ -63,11 +63,47 @@ data class LearnedWord(
         else -> text
     }
 
+    /**
+     * Masks a credential for display so it can be recognised without being
+     * readable.
+     *
+     * The rule is deliberately conservative at the short end: for anything shorter
+     * than [MASK_REVEAL_MIN_LENGTH] the *entire* value is masked. A 5-digit PIN
+     * shown as `12•45` would expose four of five characters, which is worse than
+     * useless on a screen another app can screenshot. Only long values (card
+     * numbers, tokens) reveal a two-character head and tail, which is enough to
+     * tell two similar entries apart without giving up the value.
+     */
     private fun mask(value: String): String {
-        if (value.length <= 4) return "•".repeat(value.length)
+        if (value.length < MASK_REVEAL_MIN_LENGTH) {
+            return "•".repeat(value.length) + " #" + distinguishingTag(value)
+        }
         val head = value.take(2)
         val tail = value.takeLast(2)
-        return head + "•".repeat(minOf(8, value.length - 4)) + tail
+        return head + "•".repeat(minOf(12, value.length - 4)) + tail + " #" + distinguishingTag(value)
+    }
+
+    /**
+     * A 4-character tag derived from the whole value, so that two masked entries
+     * that look alike (`41••••11`) can still be told apart in the cleanup list.
+     * It is a truncated SHA-256, not a prefix of the value: it reveals nothing about
+     * the characters and cannot be used to reconstruct the credential.
+     */
+    private fun distinguishingTag(value: String): String {
+        val digest = java.security.MessageDigest.getInstance("SHA-256")
+            .digest(value.toByteArray(Charsets.UTF_8))
+        val sb = StringBuilder(4)
+        for (i in 0 until 4) {
+            val b = digest[i].toInt() and 0xFF
+            sb.append(HEX[b and 0x0F])
+        }
+        return sb.toString()
+    }
+
+    private companion object {
+        /** Below this length, nothing of the value itself is revealed. */
+        const val MASK_REVEAL_MIN_LENGTH = 9
+        val HEX = "0123456789abcdef".toCharArray()
     }
 }
 
