@@ -16,3 +16,12 @@ node_modules/
 __pycache__/
 .venv/
 venv/
+
+# Gradle / Android build outputs
+.gradle/
+build/
+local.properties
+*.apk
+*.aab
+captures/
+.kotlin/

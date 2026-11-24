@@ -397,7 +397,7 @@ class PrivateImeService : InputMethodService() {
             // the content is the only proof.
             if (stored && ContentGuards.isLikelyCredential(token)) {
                 store.forget(token)
-                auditRepository.recordCredentialRevoked(token, state.signals.packageName)
+                auditRepository.recordCredentialRevoked(state.signals.packageName)
             }
         }
         maybeReassessContent(currentInputConnection)

@@ -1,8 +1,0 @@
-com.privateime.app-pngs-0 /Users/shizhihui/ccfb/runs/16416/workspace/app/build/generated/res/pngs/debug
-com.privateime.app-updated_navigation_xml-1 /Users/shizhihui/ccfb/runs/16416/workspace/app/build/generated/updated_navigation_xml/debug
-com.privateime.app-packageDebugResources-2 /Users/shizhihui/ccfb/runs/16416/workspace/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
-com.privateime.app-packageDebugResources-3 /Users/shizhihui/ccfb/runs/16416/workspace/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
-com.privateime.app-debug-4 /Users/shizhihui/ccfb/runs/16416/workspace/app/build/intermediates/merged_res/debug/mergeDebugResources
-com.privateime.app-debug-5 /Users/shizhihui/ccfb/runs/16416/workspace/app/src/debug/res
-com.privateime.app-main-6 /Users/shizhihui/ccfb/runs/16416/workspace/app/src/main/res
-gradleHome-0 /Users/shizhihui/toolchain/gradle-home

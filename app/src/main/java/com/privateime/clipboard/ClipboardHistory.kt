@@ -24,9 +24,16 @@ class ClipboardHistory(context: Context) {
     private val prefs: SharedPreferences =
         context.applicationContext.getSharedPreferences(FILE, Context.MODE_PRIVATE)
 
-    /** False when encryption is unavailable; callers must then skip capture entirely. */
-    val available: Boolean
-        get() = KeystoreCrypto.encrypt("probe") != null
+    /**
+     * False when encryption is unavailable; callers must then skip capture entirely.
+     *
+     * Cached after the first probe: `onClipboardChanged` fires on every copy
+     * anywhere on the device, and a Keystore round trip per copy is both slow and
+     * something the user would feel as keyboard lag.
+     */
+    val available: Boolean by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        KeystoreCrypto.encrypt("probe") != null
+    }
 
     /** Diagnostics counter: how often capture was refused, and why. */
     fun recordSuppressed(reason: String) {
@@ -44,8 +51,8 @@ class ClipboardHistory(context: Context) {
         val now = System.currentTimeMillis()
         val current = readRaw()
         // Drop duplicates so re-copying a phrase does not accumulate.
-        val deduped = current.filterNot { it.text == entry }
-        val updated = (listOf(StoredEntry(now, encrypted)) + deduped).take(CAPACITY)
+        val deduped = current.filterNot { stored -> stored.matches(entry) }
+        val updated = (listOf(StoredEntry(now, encrypted, entry)) + deduped).take(CAPACITY)
         writeRaw(updated)
     }
 
@@ -103,8 +110,19 @@ class ClipboardHistory(context: Context) {
             text.count { !it.isDigit() && !it.isWhitespace() } == 0
     }
 
-    private data class StoredEntry(val timestamp: Long, val blob: String) {
-        val text: String get() = KeystoreCrypto.decrypt(blob) ?: ""
+    private data class StoredEntry(
+        val timestamp: Long,
+        val blob: String,
+        /**
+         * The plaintext for entries created in this process. Used only to avoid a
+         * Keystore decrypt per existing entry when appending; it is never written
+         * and never lives past the append. `null` for entries loaded from disk.
+         */
+        val cachedPlaintext: String? = null,
+    ) {
+        fun matches(plaintext: String): Boolean =
+            cachedPlaintext == plaintext ||
+                (cachedPlaintext == null && KeystoreCrypto.decrypt(blob) == plaintext)
     }
 
     private fun readRaw(): List<StoredEntry> {

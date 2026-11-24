@@ -47,8 +47,15 @@ class AuditRepository(context: Context) : AuditLog {
         prefs.edit().remove(KEY_ENTRIES).apply()
     }
 
-    /** Convenience entry used by the IME when it deletes a credential mid-session. */
-    fun recordCredentialRevoked(token: String, packageName: String) {
+    /**
+     * Records that a credential-shaped token was refused or revoked.
+     *
+     * Deliberately takes no token and records no length: even a length is
+     * content-derived metadata, and an audit log that accumulates it can narrow
+     * down what the user typed. The event itself (a revocation happened, in this
+     * app, at this time) is all the audit needs.
+     */
+    fun recordCredentialRevoked(packageName: String) {
         record(
             AuditLog.Entry(
                 atMillis = System.currentTimeMillis(),
@@ -56,7 +63,7 @@ class AuditRepository(context: Context) : AuditLog {
                 fieldShape = "", // deliberately empty: no field context available here
                 tier = Tier.LOCKED,
                 category = Category.UNKNOWN_SECRET,
-                codes = listOf("learn.revoked", "len=" + token.length),
+                codes = listOf("learn.revoked"),
                 transition = "revoke",
             ),
         )
