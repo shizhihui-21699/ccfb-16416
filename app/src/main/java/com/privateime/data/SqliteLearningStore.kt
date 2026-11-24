@@ -76,9 +76,8 @@ class SqliteLearningStore(context: Context) : LearningStore, Closeable {
     }
 
     override fun findWord(text: String): LearnedWord? {
-        // A direct indexed lookup. The previous `allWords().firstOrNull { ... }`
-        // loaded and mapped the entire dictionary on every call, and the purge path
-        // calls this once per token — an O(n·m) blowup with a large dictionary.
+        // A direct indexed lookup: the purge path calls this once per token, so it
+        // must not scan the whole dictionary.
         val db = helper.readableDatabase
         db.query(
             TABLE_WORDS, null, "text = ?", arrayOf(text), null, null, "last_seen DESC", "1",
