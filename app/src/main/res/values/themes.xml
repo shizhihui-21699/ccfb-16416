@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      The activity theme. DayNight is only available from API 29, so the base
+      resource uses the light device default and values-v29 overrides it with the
+      day/night variant. Building one theme with a values-v29 override is the
+      supported way to use a newer framework style on a lower minSdk.
+    -->
+    <style name="AppTheme" parent="@android:style/Theme.DeviceDefault.Light" />
+</resources>

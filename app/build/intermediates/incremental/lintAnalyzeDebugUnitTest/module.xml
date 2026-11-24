@@ -1,0 +1,20 @@
+<lint-module
+    format="1"
+    dir="/Users/shizhihui/ccfb/runs/16416/workspace/app"
+    name=":app"
+    type="APP"
+    maven="PrivateIme:app:unspecified"
+    agpVersion="9.3.1"
+    buildFolder="build"
+    bootClassPath="/Users/shizhihui/toolchain/android-sdk/platforms/android-36/android.jar:/Users/shizhihui/toolchain/android-sdk/build-tools/36.0.0/core-lambda-stubs.jar"
+    javaSourceLevel="17"
+    compileTarget="android-36"
+    neverShrinking="true"
+    highlightGradualR8Api="false">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="debug"/>
+</lint-module>

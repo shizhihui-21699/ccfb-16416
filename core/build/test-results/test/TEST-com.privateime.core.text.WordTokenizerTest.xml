@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.privateime.core.text.WordTokenizerTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-11-24T19:36:09.670Z" hostname="192.168.1.145" time="0.001">
+  <properties/>
+  <testcase name="a token longer than the cap is dropped not truncated" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <testcase name="digit runs survive as single tokens" classname="com.privateime.core.text.WordTokenizerTest" time="0.001"/>
+  <testcase name="a pasted paragraph is dropped whole, never split into entries" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <testcase name="emoji and symbols alone are not tokens" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <testcase name="zero width characters are not treated as delimiters" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <testcase name="mixed scripts stay in one token when unspaced" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <testcase name="latin words split on spaces and punctuation" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <testcase name="chinese punctuation splits tokens" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <testcase name="blank input yields nothing" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <testcase name="a long but legal cjk sentence fans out into bounded pieces" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <testcase name="urlish strings are split at their separators" classname="com.privateime.core.text.WordTokenizerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

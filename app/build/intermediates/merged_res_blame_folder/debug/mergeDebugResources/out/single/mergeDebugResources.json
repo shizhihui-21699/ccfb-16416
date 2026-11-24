@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-debug-3:/xml_data_extraction_rules.xml.flat",
+        "source": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-main-5:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-debug-3:/drawable_badge_guarded.xml.flat",
+        "source": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-main-5:/drawable/badge_guarded.xml"
+    },
+    {
+        "merged": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-debug-3:/xml_method.xml.flat",
+        "source": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-main-5:/xml/method.xml"
+    },
+    {
+        "merged": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-debug-3:/drawable_badge_locked.xml.flat",
+        "source": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-main-5:/drawable/badge_locked.xml"
+    },
+    {
+        "merged": "com.privateime.app-debug-3:/drawable_ic_launcher.xml.flat",
+        "source": "com.privateime.app-main-5:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-debug-3:/drawable_badge_neutral.xml.flat",
+        "source": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-main-5:/drawable/badge_neutral.xml"
+    },
+    {
+        "merged": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-debug-3:/xml_accessibility_service_config.xml.flat",
+        "source": "/Users/shizhihui/toolchain/gradle-home/daemon/9.9.2/com.privateime.app-main-5:/xml/accessibility_service_config.xml"
+    }
+]

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.privateime.core.detect.SensitivityDetectorTest" tests="27" skipped="0" failures="0" errors="0" timestamp="2026-11-24T19:36:09.613Z" hostname="192.168.1.145" time="0.027">
+  <properties/>
+  <testcase name="english one-time code placeholder" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.015"/>
+  <testcase name="sms code field is an otp" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="card number label" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="random digit string fails luhn and stays open" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="six digits typed in a plain box do not immediately lock" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="explain never contains the typed text" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="accessibility isPassword alone is enough" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="mislabelled password box caught by chinese hint" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="declared password field is locked" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="search box that mentions password stays open" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="luhn-valid card number in a plain text field escalates" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="payment pin in chinese" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="web password variation is locked" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="email-shaped content in unlabelled field" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="numeric password variation is a pin" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="username field is pii not secret" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="evidence carries no raw text" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="web page title supplies context" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="login password via resource id" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.002"/>
+  <testcase name="chat input stays open" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="short numeric field with no label is at most weak" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="sticky memory keeps a field locked when the app hides its type" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="english search field stays open" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="email field is pii" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="web search field stays open" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.001"/>
+  <testcase name="camelcase field name" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <testcase name="comment box stays open" classname="com.privateime.core.detect.SensitivityDetectorTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

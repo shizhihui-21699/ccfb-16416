@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.privateime.core.privacy.PrivacyPolicyTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-11-24T19:36:09.668Z" hostname="192.168.1.145" time="0.001">
+  <properties/>
+  <testcase name="guarded field keeps typing usable but cuts cloud and clipboard" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="locked field blocks every sink" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="registry matches whole segments only" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="reason codes are stable identifiers not prose" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="strict web mode off leaves weak pii open" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="cloud sync refuses credentials and pii by default" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="weak secret is guarded not locked" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="app override to locked wins" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="pii learning can be opted in" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.001"/>
+  <testcase name="clipboard capture requires an open field and the master switch" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="super apps are deliberately not in the finance list" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="open field with defaults allows every sink" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="always private override locks an innocent field" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="master switch disables cloud everywhere" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="trusted field override opens a field the detector locked" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="finance app cannot lower an existing lock" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="finance app raises an open field to guarded" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <testcase name="strict web mode promotes weak pii" classname="com.privateime.core.privacy.PrivacyPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

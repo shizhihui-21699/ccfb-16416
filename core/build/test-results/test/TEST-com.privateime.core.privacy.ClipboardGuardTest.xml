@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.privateime.core.privacy.ClipboardGuardTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-24T19:36:09.665Z" hostname="192.168.1.145" time="0.002">
+  <properties/>
+  <testcase name="no focused field still applies the content check" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.001"/>
+  <testcase name="plain pii is not clipboard residue" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.0"/>
+  <testcase name="a short number is not residue" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.0"/>
+  <testcase name="card, national id and credential-shaped token are residue" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.0"/>
+  <testcase name="ordinary copied text is not residue" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.0"/>
+  <testcase name="card number is blocked even in an open field" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.0"/>
+  <testcase name="null text with an open field is allowed" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.0"/>
+  <testcase name="capture from a locked field is blocked" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.0"/>
+  <testcase name="ordinary text in an open field is allowed" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.0"/>
+  <testcase name="capture from a guarded field is blocked" classname="com.privateime.core.privacy.ClipboardGuardTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

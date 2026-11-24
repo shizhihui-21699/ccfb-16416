@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light theme; the keyboard follows the system's night mode via values-night. -->
+    <color name="keyboard_background">#F2F3F5</color>
+    <color name="key_background">#FFFFFF</color>
+    <color name="key_text">#1A1A1A</color>
+    <color name="candidate_text">#333333</color>
+    <color name="explanation_background">#E8EAEE</color>
+
+    <color name="locked">#B3261E</color>
+    <color name="guarded">#8A5300</color>
+    <color name="neutral">#3C5A75</color>
+    <color name="on_locked">#FFFFFF</color>
+    <color name="on_guarded">#FFFFFF</color>
+    <color name="on_neutral">#FFFFFF</color>
+</resources>
